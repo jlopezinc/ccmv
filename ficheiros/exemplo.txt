@@ -1,0 +1,16 @@
+# Estatutos da Associação Centro Cultural do Monte de Vez
+
+Este é um ficheiro exemplo para demonstrar a funcionalidade de download. 
+
+## Informações
+
+- Nome:  Associação Centro Cultural do Monte de Vez
+- Data de Fundação: 10 de Outubro de 1980
+- Pessoa Coletiva: nº 501 327 738
+- Morada: Serradas da Freixiosa - 3230-221 Penela
+
+## Artigo 1º - Denominação
+
+A associação denomina-se "Centro Cultural do Monte de Vez"... 
+
+(Este é apenas um documento exemplo.  Os estatutos reais devem ser adicionados posteriormente.)
