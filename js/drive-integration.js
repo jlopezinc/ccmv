@@ -21,6 +21,7 @@
     }
 
     const API_BASE_URL = 'https://www.googleapis.com/drive/v3';
+    const DRIVE_FILE_BASE_URL = 'https://drive.google.com/file/d/';
     
     /**
      * Obtém o ícone apropriado para o tipo de ficheiro
@@ -64,6 +65,9 @@
 
     /**
      * Busca ficheiros da pasta do Google Drive
+     * 
+     * Note: API keys in URLs are the standard method for Google API client-side applications.
+     * When properly restricted by HTTP referrers in Google Cloud Console, this is secure.
      */
     async function fetchDriveFiles(folderId) {
         const fields = 'files(id,name,mimeType,webViewLink,iconLink,fileExtension)';
@@ -88,6 +92,12 @@
 
     /**
      * Busca ficheiros recursivamente incluindo subpastas
+     * 
+     * @param {string} folderId - ID da pasta do Google Drive
+     * @param {number} depth - Profundidade atual da recursão (padrão: 0)
+     * @param {number} maxDepth - Profundidade máxima permitida (padrão: 2)
+     *                            Limita a recursão para evitar chamadas excessivas à API
+     * @returns {Promise<Array>} Array de objetos de ficheiros
      */
     async function fetchAllFiles(folderId, depth = 0, maxDepth = 2) {
         if (depth > maxDepth) {
@@ -162,7 +172,7 @@
             li.className = 'file-item';
 
             const link = document.createElement('a');
-            link.href = file.webViewLink || `https://drive.google.com/file/d/${file.id}/view`;
+            link.href = file.webViewLink || `${DRIVE_FILE_BASE_URL}${file.id}/view`;
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
 
