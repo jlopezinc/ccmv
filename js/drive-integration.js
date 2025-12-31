@@ -122,7 +122,8 @@
                 try {
                     const subFiles = await fetchAllFiles(file.id, file.id, depth + 1, maxDepth);
                     file.children = subFiles;
-                    // Não adicionar subFiles a allFiles diretamente - serão renderizados via children
+                    // Os subFiles são armazenados em file.children para manter a estrutura hierárquica
+                    // e evitar duplicação quando renderizados recursivamente
                 } catch (error) {
                     console.warn(`Erro ao buscar ficheiros da subpasta ${file.name}:`, error);
                 }
