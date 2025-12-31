@@ -91,15 +91,16 @@
     }
 
     /**
-     * Busca ficheiros recursivamente incluindo subpastas
+     * Busca ficheiros recursivamente incluindo subpastas e constrói estrutura hierárquica
      * 
      * @param {string} folderId - ID da pasta do Google Drive
+     * @param {string|null} parentId - ID da pasta pai (null para raiz)
      * @param {number} depth - Profundidade atual da recursão (padrão: 0)
      * @param {number} maxDepth - Profundidade máxima permitida (padrão: 2)
      *                            Limita a recursão para evitar chamadas excessivas à API
-     * @returns {Promise<Array>} Array de objetos de ficheiros
+     * @returns {Promise<Array>} Array de objetos de ficheiros com estrutura hierárquica
      */
-    async function fetchAllFiles(folderId, depth = 0, maxDepth = 2) {
+    async function fetchAllFiles(folderId, parentId = null, depth = 0, maxDepth = 2) {
         if (depth > maxDepth) {
             return [];
         }
@@ -108,14 +109,20 @@
         const allFiles = [];
 
         for (const file of files) {
+            // Adicionar informação de hierarquia
+            file.parentId = parentId;
+            file.depth = depth;
+            file.children = [];
+            
             if (file.mimeType === 'application/vnd.google-apps.folder') {
                 // Adicionar a pasta
                 allFiles.push(file);
                 
                 // Buscar ficheiros dentro da pasta (recursivamente)
                 try {
-                    const subFiles = await fetchAllFiles(file.id, depth + 1, maxDepth);
-                    allFiles.push(...subFiles);
+                    const subFiles = await fetchAllFiles(file.id, file.id, depth + 1, maxDepth);
+                    file.children = subFiles;
+                    // Não adicionar subFiles a allFiles diretamente - serão renderizados via children
                 } catch (error) {
                     console.warn(`Erro ao buscar ficheiros da subpasta ${file.name}:`, error);
                 }
@@ -145,7 +152,108 @@
     }
 
     /**
-     * Renderiza a lista de ficheiros no DOM
+     * Renderiza um ficheiro ou pasta individual
+     */
+    function renderFileItem(file, depth = 0) {
+        const li = document.createElement('li');
+        const isFolder = file.mimeType === 'application/vnd.google-apps.folder';
+        
+        li.className = isFolder ? 'file-item folder-item' : 'file-item';
+        li.style.paddingLeft = `${depth * 30 + 15}px`;
+
+        if (isFolder) {
+            // Criar container para pasta com arrow e nome
+            const folderHeader = document.createElement('div');
+            folderHeader.className = 'folder-header';
+            folderHeader.style.display = 'flex';
+            folderHeader.style.alignItems = 'center';
+            folderHeader.style.cursor = 'pointer';
+            folderHeader.style.gap = '10px';
+
+            // Arrow para expand/collapse
+            const arrow = document.createElement('span');
+            arrow.className = 'folder-arrow expanded';
+            arrow.textContent = '▼';
+            arrow.style.transition = 'transform 0.3s ease';
+            arrow.style.display = 'inline-block';
+
+            // Ícone e nome da pasta
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'file-icon';
+            iconSpan.textContent = getFileIcon(file.mimeType, file.iconLink);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = file.name;
+            nameSpan.style.fontWeight = '600';
+
+            folderHeader.appendChild(arrow);
+            folderHeader.appendChild(iconSpan);
+            folderHeader.appendChild(nameSpan);
+            li.appendChild(folderHeader);
+
+            // Container para ficheiros nested
+            if (file.children && file.children.length > 0) {
+                const nestedContainer = document.createElement('ul');
+                nestedContainer.className = 'nested-files expanded';
+                nestedContainer.style.listStyle = 'none';
+                nestedContainer.style.padding = '0';
+                nestedContainer.style.margin = '0';
+                nestedContainer.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+                nestedContainer.style.overflow = 'hidden';
+
+                // Renderizar ficheiros filhos
+                const sortedChildren = sortFiles(file.children);
+                sortedChildren.forEach(childFile => {
+                    const childElement = renderFileItem(childFile, depth + 1);
+                    nestedContainer.appendChild(childElement);
+                });
+
+                li.appendChild(nestedContainer);
+
+                // Adicionar evento de clique para toggle
+                folderHeader.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const isExpanded = nestedContainer.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        nestedContainer.classList.remove('expanded');
+                        nestedContainer.classList.add('collapsed');
+                        arrow.classList.remove('expanded');
+                        arrow.classList.add('collapsed');
+                        arrow.textContent = '▶';
+                    } else {
+                        nestedContainer.classList.add('expanded');
+                        nestedContainer.classList.remove('collapsed');
+                        arrow.classList.add('expanded');
+                        arrow.classList.remove('collapsed');
+                        arrow.textContent = '▼';
+                    }
+                });
+            }
+        } else {
+            // Ficheiro normal (não pasta)
+            const link = document.createElement('a');
+            link.href = file.webViewLink || `${DRIVE_FILE_BASE_URL}${file.id}/view`;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+
+            const iconSpan = document.createElement('span');
+            iconSpan.className = 'file-icon';
+            iconSpan.textContent = getFileIcon(file.mimeType, file.iconLink);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.textContent = file.name;
+
+            link.appendChild(iconSpan);
+            link.appendChild(nameSpan);
+            li.appendChild(link);
+        }
+
+        return li;
+    }
+
+    /**
+     * Renderiza a lista de ficheiros no DOM com estrutura hierárquica
      */
     function renderFiles(files) {
         const filesList = document.querySelector('.files-list');
@@ -168,25 +276,8 @@
 
         // Criar elementos da lista
         sortedFiles.forEach(file => {
-            const li = document.createElement('li');
-            li.className = 'file-item';
-
-            const link = document.createElement('a');
-            link.href = file.webViewLink || `${DRIVE_FILE_BASE_URL}${file.id}/view`;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-
-            const iconSpan = document.createElement('span');
-            iconSpan.className = 'file-icon';
-            iconSpan.textContent = getFileIcon(file.mimeType, file.iconLink);
-
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = file.name;
-
-            link.appendChild(iconSpan);
-            link.appendChild(nameSpan);
-            li.appendChild(link);
-            filesList.appendChild(li);
+            const fileElement = renderFileItem(file, 0);
+            filesList.appendChild(fileElement);
         });
     }
 
