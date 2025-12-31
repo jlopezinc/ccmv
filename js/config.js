@@ -13,7 +13,7 @@ const DRIVE_CONFIG = {
      * 2. Copie o ID do URL: https://drive.google.com/drive/folders/FOLDER_ID_AQUI
      * 3. Substitua 'YOUR_FOLDER_ID_HERE' pelo ID copiado
      */
-    folderId: 'YOUR_FOLDER_ID_HERE',
+    folderId: '1U-uOhcj_XDzTHoFWherETFJK7oSk__0k',
     
     /**
      * Chave API do Google Cloud
@@ -29,5 +29,5 @@ const DRIVE_CONFIG = {
      * IMPORTANTE: Por motivos de segurança, também deve restringir a chave
      * por domínio (HTTP referrers) no Google Cloud Console.
      */
-    apiKey: 'YOUR_API_KEY_HERE'
+    apiKey: 'AIzaSyDuM197pj8aW1_m94OKgl2gw2b1_8u_SQU'
 };
