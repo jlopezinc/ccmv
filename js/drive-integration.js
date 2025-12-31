@@ -173,8 +173,8 @@
 
             // Arrow para expand/collapse
             const arrow = document.createElement('span');
-            arrow.className = 'folder-arrow expanded';
-            arrow.textContent = '▼';
+            arrow.className = 'folder-arrow collapsed';
+            arrow.textContent = '▶';
             arrow.style.transition = 'transform 0.3s ease';
             arrow.style.display = 'inline-block';
 
@@ -195,7 +195,7 @@
             // Container para ficheiros nested
             if (file.children && file.children.length > 0) {
                 const nestedContainer = document.createElement('ul');
-                nestedContainer.className = 'nested-files expanded';
+                nestedContainer.className = 'nested-files collapsed';
                 nestedContainer.style.listStyle = 'none';
                 nestedContainer.style.padding = '0';
                 nestedContainer.style.margin = '0';
