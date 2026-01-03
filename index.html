@@ -2,283 +2,44 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=https://centro-cultural-monte-de-vez.github.io/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centro Cultural do Monte de Vez</title>
+    <title>Redirecionando...</title>
     <style>
-        * {
-            margin: 0;
-            padding:  0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
         }
-
-        .container {
-            max-width: 1200px;
-            margin:  0 auto;
-            padding: 20px;
-        }
-
-        header {
-            background:  linear-gradient(135deg, #5d3f46 0%, #ae7985 100%);
-            color: white;
-            padding: 40px 20px;
-            text-align:  center;
-            border-radius:  10px;
-            margin-bottom: 40px;
+        .redirect-message {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-
-        .logo {
-            width: 240px;
-            height: 240px;
-            margin: 0 auto 20px;
-            padding: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        h1 {
-            font-size:  2.5em;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .section {
-            background: white;
-            padding: 30px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .section h2 {
-            color:  #16305a;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom:  3px solid #ae7985;
-        }
-
-        .info-grid {
-            display: grid;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .info-item {
-            padding: 15px;
-            background: #f8f9fa;
-            border-left:  4px solid #ae7985;
-            border-radius: 5px;
-        }
-
-        .info-item strong {
-            color: #5d3f46;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #2970c4;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .files-list {
-            list-style: none;
-        }
-
-        .file-item {
-            padding: 15px;
-            margin-bottom: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .file-item:hover {
-            background: #e9ecef;
-            transform: translateX(5px);
-        }
-
-        .file-item a {
-            color:  #16305a;
+        a {
+            color: #2970c4;
             text-decoration: none;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .file-item a:hover {
-            color: #2970c4;
-        }
-
-        .file-icon {
-            font-size: 1.5em;
-        }
-
-        /* Estilos para estrutura hierárquica de pastas */
-        .folder-item {
-            background: #e3f2fd;
-            border-left: 4px solid #2970c4;
-        }
-
-        .folder-item:hover {
-            background: #bbdefb;
-        }
-
-        .folder-header {
-            user-select: none;
-        }
-
-        .folder-arrow {
-            font-size: 0.8em;
-            color: #2970c4;
             font-weight: bold;
         }
-
-        .folder-arrow.collapsed {
-            transform: rotate(0deg);
-        }
-
-        .folder-arrow.expanded {
-            transform: rotate(0deg);
-        }
-
-        .nested-files {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .nested-files.expanded {
-            max-height: none;
-            opacity: 1;
-            margin-top: 5px;
-        }
-
-        .nested-files.collapsed {
-            max-height: 0;
-            opacity: 0;
-            margin-top: 0;
-            overflow: hidden;
-        }
-
-        .nested-files .file-item {
-            margin-bottom: 5px;
-            border-left: 2px solid #ccc;
-        }
-
-        .nested-files .folder-item {
-            border-left: 3px solid #2970c4;
-        }
-
-        footer {
-            text-align:  center;
-            padding: 20px;
-            color: #666;
-            margin-top: 40px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size:  1.8em;
-            }
-
-            .subtitle {
-                font-size: 1em;
-            }
-
-            .section {
-                padding: 20px;
-            }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
+    <script>
+        window.location.replace("https://centro-cultural-monte-de-vez.github.io/");
+    </script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <img src="images/logo.png" alt="Centro Cultural do Monte de Vez">
-            </div>
-            <h1>Centro Cultural do Monte de Vez</h1>
-            <p class="subtitle">Preservando a cultura e tradição desde 1980</p>
-        </header>
-
-        <div class="section">
-            <h2>📍 Informações e Contactos</h2>
-            <div class="info-grid">
-                <div class="info-item">
-                    <strong>Nome da Associação</strong>
-                    Associação Centro Cultural do Monte de Vez
-                </div>
-                <div class="info-item">
-                    <strong>Data de Fundação</strong>
-                    10 de Outubro de 1980
-                </div>
-                <div class="info-item">
-                    <strong>Pessoa Coletiva</strong>
-                    nº 501 327 738
-                </div>
-                <div class="info-item">
-                    <strong>Morada</strong>
-                    Rua do Centro Cultural - Serradas da Freixiosa - Santa Eufémia - 3230-221 Penela
-                </div>
-                <div class="info-item">
-                    <strong>Email</strong>
-                    <a href="mailto:ccmontedevez@gmail.com" style="color: #2970c4;">ccmontedevez@gmail.com</a>
-                </div>
-                <div class="info-item">
-                    <span class="badge">✓ Associação de Utilidade Pública (AUP)</span>
-                </div>
-                <div class="info-item">
-                    <strong>TT Amigos do Natal</strong>
-                    O Centro Cultural do Monte de Vez orgulha-se de organizar anualmente o evento "TT Amigos do Natal", um encontro de veículos todo o terreno de carácter solidário.
-                    <br/>
-                    <a href="https://www.facebook.com/profile.php?id=100064263175980" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; color: #1877f2; text-decoration: none; font-weight: 500; padding: 8px 16px; background: #e7f3ff; border-radius: 6px; transition: all 0.3s ease;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                        </svg>
-                        Visite a nossa página no Facebook
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📁 Ficheiros e Documentos</h2>
-            <p style="margin-bottom: 20px; color: #666;">Consulte e descarregue os documentos oficiais da associação: </p>
-            <ul class="files-list">
-            </ul>
-        </div>
-
-        <footer>
-            <p>&copy; 2026 Centro Cultural do Monte de Vez. Todos os direitos reservados.</p>
-        </footer>
+    <div class="redirect-message">
+        <h1>Redirecionando...</h1>
+        <p>Este site foi movido para <a href="https://centro-cultural-monte-de-vez.github.io/">https://centro-cultural-monte-de-vez.github.io/</a></p>
+        <p>Se não for redirecionado automaticamente, clique no link acima.</p>
     </div>
-
-    <!-- Google Drive Integration -->
-    <script src="js/config.js"></script>
-    <script src="js/drive-integration.js"></script>
 </body>
 </html>
